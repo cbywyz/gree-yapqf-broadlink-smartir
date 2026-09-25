@@ -1,0 +1,8 @@
+{
+  "_readme": "格力 YAP 系列遥控器（YAP0F/YAP1F2/YAPQF）附加键实测红外码。Broadlink Base64 pulse 格式，可直接 remote.send_command 发送（须带 b64: 前缀）。来源：2026-09-25 用 RM Mini 3 对 YAPQF 遥控器学码，制冷状态下实测有效。若你的机型不认，请用 learn_extra_keys.py 自己学码。",
+  "swing_vertical": {
+    "_desc": "上下扫风（循环切换）。注意：部分格力挂机左右导风条为固定式（无电机），swing_horizontal 学了也没反应——先确认硬件。",
+    "code": "JgAoAQABKZIXNRcRFxAXNRc1FzUXNRcRFjUXERcRFzUWERcRFxEWERcRFxEWERcRFxEWNRcRFxEXEBcRFxEXEBc1FxEXNRcRFhEXNRcRFwACjxc1FxEXERYRFzUXERcQFxEXERcQFxEXERcQFxEXNRcQFxEXERcQGBAXERcQFxEXERcQFxEXERcQFzUXERcRFxAXAAUiAAEpkhc1FxEWERc1FzUXNRY2FhEXNRcRFxAXNRcRFhIWERcRFhIWERYSFxEWERc1FxEXERYRFxEXERYRFzUXNRc1FxAXERc1FxEWAAKQFzUXERcQFxEXERcQFxEXNRcRFhEXERcRFhEXERcRFhEXERcRFhEXERcRFhEXNRcRFxAXERcRFhEXERcRFhIWNRcABQ0FAA0F",
+    "length": 748
+  }
+}

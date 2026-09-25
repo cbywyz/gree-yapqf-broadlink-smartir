@@ -111,6 +111,77 @@ data:
   command: "b64:JgCSAAABKJ..."   # ← 注意必须有 b64: 前缀
 ```
 
+## 进阶：学码补齐附加按键（上下扫风 / 灯光 / 睡眠等）
+
+SmartIR 码表只含温控主功能（开关/模式/风速/温度）。遥控器上的**扫风、灯光、睡眠**等键码表里没有，需要用 `remote.learn_command` 学原遥控器的码。
+
+> 本仓库 [codes/gree_yap_extra_codes.json](codes/gree_yap_extra_codes.json) 已附 YAPQF 实测的**上下扫风完整码**（748 字节三段式），可直接 b64 直发，不用学。其余键照下面流程自己学。
+
+### 5.1 learn_command 用法（新版 HA）
+
+⚠️ **新版 HA（2024+）已移除 `storage_path` 参数**，网上旧文档传了会直接 400。现在学到的码自动存进 `.storage/broadlink_remote_<mac>_codes`：
+
+```yaml
+action: remote.learn_command
+target:
+  entity_id: remote.xxx          # 你的 broadlink remote 实体
+data:
+  device: gree_extra             # 自定义组名
+  command: ["swing_vertical"]    # 自定义命令名；传列表可串行学多键
+  command_type: ir
+  timeout: 60                    # 等按键的最长秒数（0-60）
+```
+
+调用后黑豆进入学习状态，把原遥控器对准黑豆正面接收窗（**5~10 厘米**，太近红外过载反而截断），按下按键即可。回放时**不带 `b64:` 前缀**就表示查学习库：
+
+```yaml
+action: remote.send_command
+target:
+  entity_id: remote.xxx
+data:
+  device: gree_extra
+  command: ["swing_vertical"]
+```
+
+### 5.2 学码实战坑（全部踩过）
+
+| # | 坑 | 现象 / 解法 |
+|---|---|---|
+| 1 | 传旧参数 `storage_path` | HTTP 400 Bad Request —— 删掉，新版码自动入库 |
+| 2 | 残留学习窗口截胡第一个码 | 试探参数时触发的学习还在等码，正式学习第一键被它收走 → 全部错位。开学前确保没有未超时的学习任务（等 60s 或重启） |
+| 3 | **码长截断诊断法** | 某键反复学到**恒定长度**的短码（如恒 400）且回放无效 = 三段式长码（含长间隔）被学习模式提前截断（RM 系列短板，完整码 748）。先试 `alternative: true` 换采样模式；仍不行就直接回放历史好码或从博联 App 抓 |
+| 4 | `alternative: true` 不是万能 | 我们实测它学出 2 字节的废码，比不传还差——穷举一下两种模式都试试 |
+| 5 | **先确认硬件有该功能再学码** | 血泪教训：我们三轮学码后才发现空调的左右导风条是**固定死、无电机**的——遥控器上「左右扫风」键发的码完全正确，但设备根本不执行。学码前先上手摸摸导风条动不动！ |
+
+### 5.3 面板加按钮（Lovelace button 卡片）
+
+学好的码做成按钮，`tap_action` 直接 b64 发码（不依赖学习库，重装也不丢）：
+
+```yaml
+type: button
+name: 上下扫风
+icon: mdi:arrow-up-down
+icon_height: 36px
+tap_action:
+  action: perform-action
+  perform_action: remote.send_command
+  target:
+    entity_id: remote.xxx
+  data:
+    command:
+      - "b64:JgAoAQABKZIXNRcRFxAXNRc1FzUXNRcRFjUX..."   # 完整码见 codes/gree_yap_extra_codes.json
+```
+
+批量学码可用 [scripts/learn_extra_keys.py](scripts/learn_extra_keys.py)（串行学习 + 码长截断检测 + 学成自动回放验证）：
+
+```bash
+export HASS_URL="http://homeassistant.local:8123"
+export HASS_TOKEN="<长期访问令牌>"
+python scripts/learn_extra_keys.py swing_vertical swing_horizontal \
+    --entity remote.xxx \
+    --codes-file /config/.storage/broadlink_remote_<mac>_codes
+```
+
 ## 排错表
 
 | 现象 | 原因 | 处理 |
@@ -121,6 +192,7 @@ data:
 | 实体正常、日志无报错、空调没反应 | 码表协议与你的空调不匹配 | 按 §4 换码表；都不行就用 `remote.learn_command` 学原遥控器的码 |
 | 实体只有 off/cool/heat 两三种模式 | 用了 1183 等简化码表 | 换 1185（5 模式 + 4 风速） |
 | 博联官方 App 能控制、HA 不能 | 大概率坑 1；确认 HA 日志无发送错误后再怀疑码表 | 见上 |
+| 学码反复得到恒定短码且回放无效 | 三段式长码被截断，或硬件根本没这功能 | 见 §5.2 坑 3 / 坑 5 |
 
 ## 实测环境
 
