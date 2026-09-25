@@ -1,0 +1,21 @@
+# SmartIR fork 1.19.x 完整配置示例（格力 YAP 遥控器 + Broadlink RM Mini 3）
+# 放到 Home Assistant 的 configuration.yaml 中。
+#
+# ⚠️ 三个高频错误：
+# 1. 不要写集成级的 `smartir:` 行（fork 1.19.x 不支持，会报
+#    "The 'smartir' integration does not support YAML setup"）
+# 2. controller_data 必须是结构化映射，不能再用旧版字符串形式
+# 3. 码表 1185 对应格力 YAP 系列遥控器（YAP0F/YAP1F2/YAPQF），其他遥控器型号换码表
+
+climate:
+  - platform: smartir
+    name: "Gree AC"                       # 实体显示名，随意
+    unique_id: gree_ac_yapqf              # 全局唯一即可
+    device_code: 1185                     # ← 格力 YAP 遥控器协议码表
+    controller_data:
+      controller_type: Broadlink
+      remote_entity: remote.broadlink_remote   # ← 换成你的 broadlink remote 实体 id
+      delay_secs: 0.5
+      num_repeats: 1
+    temperature_sensor: sensor.room_temperature   # 可选：室温实体（联动显示当前室温）
+    humidity_sensor: sensor.room_humidity          # 可选：湿度实体
