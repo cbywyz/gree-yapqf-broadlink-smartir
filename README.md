@@ -4,6 +4,12 @@
 
 > 2026-09-25 实测打通：HA 面板直接控格力空调（开关 / 5 种模式 / 4 档风速 / 温度调节），温湿度自动联动第三方传感器。
 
+## 相关仓库（同一系列教程）
+
+- [cbywyz/ha-hualing-fan-broadlink](https://github.com/cbywyz/ha-hualing-fan-broadlink) —— 华凌风扇（WH-FGA2401）红外接入教程：RM3 学码 + **全套 8 键遥控器编码库**，思路与本仓库同源（Broadlink 红外），风扇没有现成码库、纯靠学习
+- [cbywyz/ha-midea-hualing-ac](https://github.com/cbywyz/ha-midea-hualing-ac) —— 美的/华凌**空调**接入教程：华凌本地 token 拿不到，走 `midea_auto_cloud` 云端方案（美居账号一次登录）
+- [cbywyz/phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1) —— 斐讯悟空 M1 空气检测仪本地复活（本仓库温湿度数据源的完整教程）
+
 ## 适用范围
 
 | 你的情况 | 是否适用 |
@@ -200,12 +206,6 @@ python scripts/learn_extra_keys.py swing_vertical swing_horizontal \
 - Broadlink RM Mini 3（黑豆），遥控器与空调同房间直射
 - SmartIR fork 1.19.1 + 码表 1185
 - 温湿度来源：斐讯悟空 M1（本地复活版，另见 [phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1)）
-
-## 相关仓库（同一系列教程）
-
-- [cbywyz/ha-hualing-fan-broadlink](https://github.com/cbywyz/ha-hualing-fan-broadlink) —— 华凌风扇（WH-FGA2401）红外接入教程：RM3 学码 + **全套 8 键遥控器编码库**，思路与本仓库同源（Broadlink 红外），风扇没有现成码库、纯靠学习
-- [cbywyz/ha-midea-hualing-ac](https://github.com/cbywyz/ha-midea-hualing-ac) —— 美的/华凌**空调**接入教程：华凌本地 token 拿不到，走 `midea_auto_cloud` 云端方案（美居账号一次登录）
-- [cbywyz/phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1) —— 斐讯悟空 M1 空气检测仪本地复活（本仓库温湿度数据源的完整教程）
 
 ## 致谢
 
