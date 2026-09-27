@@ -10,6 +10,7 @@
 - [cbywyz/ha-midea-hualing-ac](https://github.com/cbywyz/ha-midea-hualing-ac) —— 美的/华凌**空调**接入教程：华凌本地 token 拿不到，走 `midea_auto_cloud` 云端方案（美居账号一次登录）
 - [cbywyz/phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1) —— 斐讯悟空 M1 空气检测仪本地复活（本仓库温湿度数据源的完整教程）
 - [cbywyz/ha-xiaomi-tv-kids-lock](https://github.com/cbywyz/ha-xiaomi-tv-kids-lock) —— 小米电视**家长管控**教程（HA 自动化）：音量上限锁 + 信号源锁定 + 儿童观看定时锁，管控放在电视外面，没有密码可破。
+
 ## 适用范围
 
 | 你的情况 | 是否适用 |
