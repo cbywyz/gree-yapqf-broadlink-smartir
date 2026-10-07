@@ -10,7 +10,6 @@
 - [cbywyz/ha-midea-hualing-ac](https://github.com/cbywyz/ha-midea-hualing-ac) —— 美的/华凌**空调**接入教程：华凌本地 token 拿不到，走 `midea_auto_cloud` 云端方案（美居账号一次登录）
 - [cbywyz/phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1) —— 斐讯悟空 M1 空气检测仪本地复活（本仓库温湿度数据源的完整教程）
 - [cbywyz/ha-tv-kids-lock](https://github.com/cbywyz/ha-tv-kids-lock) —— 电视**家长管控**教程（HA 自动化，任意智能电视通用，以小米电视为例）：音量上限锁 + 信号源锁定 + 儿童观看定时锁，管控放在电视外面，没有密码可破。
-- [cbywyz/istoreos-caddy-lucky](https://github.com/cbywyz/istoreos-caddy-lucky) —— iStoreOS **公网入口**教程：Caddy 终结 TLS（Let's Encrypt 自动签发/续期）+ LUCKY 反代，标准 443 **免端口**访问家里的服务。上面这些 HA 想在出门在外也能打开，靠的就是这套（含防火墙放行、DDNS、两套域名互备的踩坑实录）。
 
 ## 适用范围
 
